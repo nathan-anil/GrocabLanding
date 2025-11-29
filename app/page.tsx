@@ -94,7 +94,7 @@ export default function Home() {
             )}
             <span>
               {state === 'loading' && 'Joining...'}
-              {state === 'success' && "You're on the list!"}
+              {state === 'success' && "You&apos;re on the list!"}
               {state !== 'loading' && state !== 'success' && 'Join Waitlist'}
             </span>
           </button>
@@ -108,7 +108,7 @@ export default function Home() {
 
         {state === 'success' && (
           <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm transition-all duration-200">
-            You're on the list! We'll be in touch soon.
+            You&apos;re on the list! We&apos;ll be in touch soon.
           </div>
         )}
       </div>
