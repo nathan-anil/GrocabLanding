@@ -438,7 +438,7 @@ export default function Home() {
                   className="font-semibold text-[#003658] text-2xl sm:text-3xl md:text-4xl"
                   style={{ lineHeight: "1.2" }}
                 >
-              Save words from anywhere or generate new ones instantly
+                  Save words from anywhere or generate new ones instantly
                 </h2>
               </div>
               <p
@@ -592,15 +592,16 @@ export default function Home() {
                   className="font-semibold text-[#003658] text-2xl sm:text-3xl md:text-4xl"
                   style={{ lineHeight: "1.2" }}
                 >
-                  Get a daily personalized read on the topics you care about
+                  Learn your words with daily reads on the topics you care about
                 </h2>
               </div>
               <p
                 className="text-xl text-gray-700"
                 style={{ lineHeight: "1.6" }}
               >
-                Your brain remembers best with engaging content. Reading vocab through
-                meaningful context teaches usage, tone, and nuance all at once.
+                Your brain remembers best with engaging content. Reading vocab
+                through meaningful context teaches usage, tone, and nuance all
+                at once.
               </p>
               <motion.div
                 initial="hidden"
@@ -660,7 +661,7 @@ export default function Home() {
                     className="text-gray-700 font-medium text-sm sm:text-base"
                     style={{ lineHeight: "1.5" }}
                   >
-                    Set your story topics of interest (fiction, news, non-fiction, etc.)
+                    Set your story topics of interest
                   </p>
                 </motion.div>
               </motion.div>
@@ -716,7 +717,7 @@ export default function Home() {
                   className="font-semibold text-[#003658] text-2xl sm:text-3xl md:text-4xl"
                   style={{ lineHeight: "1.2" }}
                 >
-                  Byte-sized exercises with smart spaced repetition
+                  Remember your words long-term with byte sized exercises and smart spaced repetition
                 </h2>
               </div>
               <p
@@ -863,7 +864,8 @@ export default function Home() {
                   className="text-[#003658] text-sm sm:text-base mt-2"
                   style={{ lineHeight: "1.5" }}
                 >
-                 Be entertained with stories, learn about current events, or expand your knowledge with non-fiction. 
+                  Be entertained with stories, learn about current events, or
+                  expand your knowledge with non-fiction.
                 </p>
               </div>
             </motion.div>
@@ -908,7 +910,8 @@ export default function Home() {
                     marginTop: "8px",
                   }}
                 >
-                  Set your vocabulary difficulty level to match your learning goals.
+                  Set your vocabulary difficulty level to match your learning
+                  goals.
                 </p>
               </div>
             </motion.div>
@@ -953,7 +956,8 @@ export default function Home() {
                     marginTop: "8px",
                   }}
                 >
-                  Get rewarded from your learning journey and expand your garden.
+                  Get rewarded from your learning journey and expand your
+                  garden.
                 </p>
               </div>
             </motion.div>
