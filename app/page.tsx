@@ -82,6 +82,8 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(false);
+  const [excitedFeature, setExcitedFeature] = useState("");
+  const [otherFeatureText, setOtherFeatureText] = useState("");
 
   // Handle scroll to show/hide navbar
   useEffect(() => {
@@ -106,6 +108,13 @@ export default function Home() {
 
     if (state === "loading") return;
 
+    // Validate that if "other" is selected, the text field is filled
+    if (excitedFeature === "other" && !otherFeatureText.trim()) {
+      setErrorMessage("Please specify your feature or feature request.");
+      setState("error");
+      return;
+    }
+
     setErrorMessage("");
     setState("loading");
 
@@ -115,7 +124,10 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ 
+          email,
+          excitedFeature: excitedFeature === "other" ? otherFeatureText : excitedFeature,
+        }),
       });
 
       const data = await response.json();
@@ -124,6 +136,8 @@ export default function Home() {
         setState("success");
         trackWaitlistSignup(email, true);
         setEmail("");
+        setExcitedFeature("");
+        setOtherFeatureText("");
         setTimeout(() => {
           setState("idle");
           if (isModalOpen) {
@@ -153,7 +167,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="w-full h-[70px] sm:h-[80px] bg-white"
+        className="w-full h-[70px] sm:h-[80px] bg-white relative z-50"
       >
         <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-2">
@@ -268,8 +282,8 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <section className="w-full flex items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 h-[calc(100vh-70px)] sm:h-[calc(100vh-80px)]">
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center w-full">
+      <section className="w-full flex items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 min-h-[calc(100vh-70px)] sm:min-h-[calc(100vh-80px)] py-8 sm:py-0 relative z-10">
+        <div className="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center w-full">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -278,7 +292,7 @@ export default function Home() {
             className="space-y-6 sm:space-y-8"
           >
             <h1
-              className="font-bold text-[#003658] text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight"
+              className="font-bold text-[#003658] text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-tight"
               style={{ lineHeight: "1.1", letterSpacing: "-0.02em" }}
             >
               Learn powerful vocabulary in just{" "}
@@ -324,7 +338,7 @@ export default function Home() {
                   </svg>
                 </motion.div>
                 <p
-                  className="font-medium text-[#003658] text-base sm:text-lg md:text-xl"
+                  className="font-medium text-[#003658] text-sm sm:text-base md:text-lg lg:text-xl"
                   style={{ lineHeight: "1.5" }}
                 >
                   Set your personalized vocab level
@@ -355,7 +369,7 @@ export default function Home() {
                   </svg>
                 </motion.div>
                 <p
-                  className="font-medium text-[#003658] text-base sm:text-lg md:text-xl"
+                  className="font-medium text-[#003658] text-sm sm:text-base md:text-lg lg:text-xl"
                   style={{ lineHeight: "1.5" }}
                 >
                   Learn words in context with interest-based stories
@@ -386,7 +400,7 @@ export default function Home() {
                   </svg>
                 </motion.div>
                 <p
-                  className="font-medium text-[#003658] text-base sm:text-lg md:text-xl"
+                  className="font-medium text-[#003658] text-sm sm:text-base md:text-lg lg:text-xl"
                   style={{ lineHeight: "1.5" }}
                 >
                   Retain with adaptive spaced repetition
@@ -490,10 +504,10 @@ export default function Home() {
       {/* Feature Section 1: Save words from web */}
       <section
         id="features"
-        className="w-full bg-gray-50 py-16 sm:py-20 md:py-28 lg:py-32"
+        className="w-full bg-gray-50 py-12 sm:py-16 md:py-20 lg:py-28 xl:py-32"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -515,14 +529,14 @@ export default function Home() {
                   <span className="text-[#1BA8FF]"> SAVE</span>
                 </span>
                 <h2
-                  className="font-bold text-[#003658] text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight"
+                  className="font-bold text-[#003658] text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-tight"
                   style={{ lineHeight: "1.1", letterSpacing: "-0.02em" }}
                 >
                   Save words from anywhere or generate new ones instantly
                 </h2>
               </div>
               <p
-                className="text-lg sm:text-xl md:text-2xl text-gray-700"
+                className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700"
                 style={{ lineHeight: "1.6" }}
               >
                 Find words to learn that are relevant to your interests and
@@ -560,7 +574,7 @@ export default function Home() {
                     </svg>
                   </motion.div>
                   <p
-                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
+                    className="text-gray-700 font-semibold text-sm sm:text-base md:text-lg lg:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Free chrome extension
@@ -591,7 +605,7 @@ export default function Home() {
                     </svg>
                   </motion.div>
                   <p
-                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
+                    className="text-gray-700 font-semibold text-sm sm:text-base md:text-lg lg:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Generate words from your custom topics
@@ -622,7 +636,7 @@ export default function Home() {
                     </svg>
                   </motion.div>
                   <p
-                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
+                    className="text-gray-700 font-semibold text-sm sm:text-base md:text-lg lg:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Set your difficulty level
@@ -657,9 +671,9 @@ export default function Home() {
       </section>
 
       {/* Feature Section 2: Daily Personalized Read */}
-      <section className="w-full py-16 sm:py-20 md:py-28 lg:py-32">
+      <section className="w-full py-12 sm:py-16 md:py-20 lg:py-28 xl:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -681,14 +695,14 @@ export default function Home() {
                   <span className="text-[#1BA8FF]"> LEARN</span>
                 </span>
                 <h2
-                  className="font-bold text-[#003658] text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight"
+                  className="font-bold text-[#003658] text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-tight"
                   style={{ lineHeight: "1.1", letterSpacing: "-0.02em" }}
                 >
                   Learn your words with tailored daily reads
                 </h2>
               </div>
               <p
-                className="text-lg sm:text-xl md:text-2xl text-gray-700"
+                className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700"
                 style={{ lineHeight: "1.6" }}
               >
                 Your brain remembers best with engaging content. Reading vocab
@@ -727,7 +741,7 @@ export default function Home() {
                     </svg>
                   </motion.div>
                   <p
-                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
+                    className="text-gray-700 font-semibold text-sm sm:text-base md:text-lg lg:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Set your story time (2min, 5min, 10min)
@@ -758,7 +772,7 @@ export default function Home() {
                     </svg>
                   </motion.div>
                   <p
-                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
+                    className="text-gray-700 font-semibold text-sm sm:text-base md:text-lg lg:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Set your story topics of interest
@@ -793,9 +807,9 @@ export default function Home() {
       </section>
 
       {/* Feature Section 3: Byte-sized exercises */}
-      <section className="w-full bg-white py-16 sm:py-20 md:py-28 lg:py-32">
+      <section className="w-full bg-white py-12 sm:py-16 md:py-20 lg:py-28 xl:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -817,14 +831,14 @@ export default function Home() {
                   <span className="text-[#1BA8FF]"> REMEMBER</span>
                 </span>
                 <h2
-                  className="font-bold text-[#003658] text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight"
+                  className="font-bold text-[#003658] text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-tight"
                   style={{ lineHeight: "1.1", letterSpacing: "-0.02em" }}
                 >
                   Remember forever with byte sized exercises
                 </h2>
               </div>
               <p
-                className="text-lg sm:text-xl md:text-2xl text-gray-700"
+                className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700"
                 style={{ lineHeight: "1.6" }}
               >
                 Don&apos;t just learn new words, but actually retain them with
@@ -862,13 +876,13 @@ export default function Home() {
                     </svg>
                   </motion.div>
                   <p
-                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
+                    className="text-gray-700 font-semibold text-sm sm:text-base md:text-lg lg:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Smart anki style spaced repetition
                   </p>
                 </motion.div>
-
+                
                 <motion.div
                   variants={fadeInLeft}
                   className="flex items-center gap-3 sm:gap-4"
@@ -894,7 +908,7 @@ export default function Home() {
                     </svg>
                   </motion.div>
                   <p
-                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
+                    className="text-gray-700 font-semibold text-sm sm:text-base md:text-lg lg:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Simple recall and usage checks
@@ -925,7 +939,7 @@ export default function Home() {
                     </svg>
                   </motion.div>
                   <p
-                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
+                    className="text-gray-700 font-semibold text-sm sm:text-base md:text-lg lg:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Spend just 2 minutes a day
@@ -960,14 +974,14 @@ export default function Home() {
       </section>
 
       {/* Features Grid Section */}
-      <section className="w-full py-16 sm:py-20 md:py-28 lg:py-32 bg-[#EEF2F5]">
+      <section className="w-full py-12 sm:py-16 md:py-20 lg:py-28 xl:py-32 bg-[#EEF2F5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={staggerContainer}
-            className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10"
+            className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10"
           >
             {/* Card 1: Set topics */}
             <motion.div
@@ -981,7 +995,7 @@ export default function Home() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="bg-white rounded-3xl shadow-xl overflow-hidden"
             >
-              <div className="px-6 sm:px-8 pt-6 sm:pt-8">
+              <div className="px-4 sm:px-6 md:px-8 pt-4 sm:pt-6 md:pt-8">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -995,15 +1009,15 @@ export default function Home() {
                   />
                 </motion.div>
               </div>
-              <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-8 sm:pb-10">
+              <div className="px-4 sm:px-6 md:px-8 pt-4 sm:pt-6 md:pt-8 pb-6 sm:pb-8 md:pb-10">
                 <h3
-                  className="font-bold text-[#003658] mb-4 text-xl sm:text-2xl md:text-3xl tracking-tight"
+                  className="font-bold text-[#003658] mb-3 sm:mb-4 text-lg sm:text-xl md:text-2xl lg:text-3xl tracking-tight"
                   style={{ lineHeight: "1.2", letterSpacing: "-0.02em" }}
                 >
                   Learn on your own terms
                 </h3>
                 <p
-                  className="text-gray-700 text-base sm:text-lg md:text-xl font-medium"
+                  className="text-gray-700 text-sm sm:text-base md:text-lg lg:text-xl font-medium"
                   style={{ lineHeight: "1.6" }}
                 >
                   Be entertained with stories, learn about current events, or
@@ -1024,7 +1038,7 @@ export default function Home() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="bg-white rounded-3xl shadow-xl overflow-hidden"
             >
-              <div className="px-6 sm:px-8 pt-6 sm:pt-8">
+              <div className="px-4 sm:px-6 md:px-8 pt-4 sm:pt-6 md:pt-8">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -1038,15 +1052,15 @@ export default function Home() {
                   />
                 </motion.div>
               </div>
-              <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-8 sm:pb-10">
+              <div className="px-4 sm:px-6 md:px-8 pt-4 sm:pt-6 md:pt-8 pb-6 sm:pb-8 md:pb-10">
                 <h3
-                  className="font-bold text-[#003658] mb-4 text-xl sm:text-2xl md:text-3xl tracking-tight"
+                  className="font-bold text-[#003658] mb-3 sm:mb-4 text-lg sm:text-xl md:text-2xl lg:text-3xl tracking-tight"
                   style={{ lineHeight: "1.2", letterSpacing: "-0.02em" }}
                 >
                   Set custom difficulty levels
                 </h3>
                 <p
-                  className="text-gray-700 text-base sm:text-lg md:text-xl font-medium"
+                  className="text-gray-700 text-sm sm:text-base md:text-lg lg:text-xl font-medium"
                   style={{ lineHeight: "1.6" }}
                 >
                   Set your vocabulary difficulty level to match your learning
@@ -1067,7 +1081,7 @@ export default function Home() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="bg-white rounded-3xl shadow-xl overflow-hidden"
             >
-              <div className="px-6 sm:px-8 pt-6 sm:pt-8">
+              <div className="px-4 sm:px-6 md:px-8 pt-4 sm:pt-6 md:pt-8">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -1081,15 +1095,15 @@ export default function Home() {
                   />
                 </motion.div>
               </div>
-              <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-8 sm:pb-10">
+              <div className="px-4 sm:px-6 md:px-8 pt-4 sm:pt-6 md:pt-8 pb-6 sm:pb-8 md:pb-10">
                 <h3
-                  className="font-bold text-[#003658] mb-4 text-xl sm:text-2xl md:text-3xl tracking-tight"
+                  className="font-bold text-[#003658] mb-3 sm:mb-4 text-lg sm:text-xl md:text-2xl lg:text-3xl tracking-tight"
                   style={{ lineHeight: "1.2", letterSpacing: "-0.02em" }}
                 >
                   Watch your garden grow
                 </h3>
                 <p
-                  className="text-gray-700 text-base sm:text-lg md:text-xl font-medium"
+                  className="text-gray-700 text-sm sm:text-base md:text-lg lg:text-xl font-medium"
                   style={{ lineHeight: "1.6" }}
                 >
                   Get rewarded from your learning journey and expand your
@@ -1104,7 +1118,7 @@ export default function Home() {
       {/* CTA Section */}
       <section
         id="cta-section"
-        className="w-full py-20 sm:py-24 md:py-32 lg:py-40"
+        className="w-full py-12 sm:py-16 md:py-20 lg:py-28 xl:py-32"
         style={{
           background:
             "linear-gradient(180deg, #8CD3FF 0%, #68C5FF 15.38%, #34B1FF 37.98%, #34B1FF 68.75%, #34B1FF 100%)",
@@ -1116,7 +1130,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="font-bold text-white mb-6 sm:mb-8 text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight"
+            className="font-bold text-white mb-4 sm:mb-6 md:mb-8 text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-tight"
             style={{ lineHeight: "1.1", letterSpacing: "-0.02em" }}
           >
             Join the waitlist
@@ -1126,7 +1140,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="text-xl sm:text-2xl md:text-3xl text-white/95 mb-10 sm:mb-12 font-medium"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 mb-6 sm:mb-8 md:mb-10 lg:mb-12 font-medium"
             style={{ lineHeight: "1.5" }}
           >
             Join over 500 early adopters and get exclusive access when we launch.
@@ -1134,7 +1148,7 @@ export default function Home() {
 
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto"
+            className="flex flex-col gap-6 max-w-2xl mx-auto"
           >
             <motion.input
               type="email"
@@ -1150,10 +1164,230 @@ export default function Home() {
               disabled={state === "loading"}
               whileFocus={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="flex-1 px-5 py-4 sm:px-6 sm:py-5 rounded-xl border-0 focus:outline-none focus:ring-4 focus:ring-white/30 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 text-base sm:text-lg font-medium shadow-lg placeholder:text-gray-400"
+              className="w-full px-4 py-3 sm:px-5 sm:py-4 md:px-6 md:py-5 rounded-xl border-0 focus:outline-none focus:ring-4 focus:ring-white/30 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 text-sm sm:text-base md:text-lg font-medium shadow-lg placeholder:text-gray-400"
               required
               aria-label="Email address"
             />
+
+            <div className="space-y-4">
+              <label className="block text-sm sm:text-base font-semibold text-white/95 mb-3">
+                P.S. Which feature are you most excited for?
+              </label>
+              <div className="space-y-3">
+                <motion.label
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
+                    excitedFeature === "saving-words"
+                      ? "border-white bg-white/20 shadow-lg backdrop-blur-sm"
+                      : "border-white/20 hover:border-white/40 bg-white/10 backdrop-blur-sm"
+                  }`}
+                >
+                  <div className="relative flex items-center justify-center">
+                    <input
+                      type="radio"
+                      name="excitedFeature-cta"
+                      value="saving-words"
+                      checked={excitedFeature === "saving-words"}
+                      onChange={(e) => {
+                        setExcitedFeature(e.target.value);
+                        setOtherFeatureText("");
+                        if (state === "success" || state === "error") {
+                          setState("idle");
+                          setErrorMessage("");
+                        }
+                      }}
+                      disabled={state === "loading"}
+                      className="sr-only"
+                    />
+                    <div
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
+                        excitedFeature === "saving-words"
+                          ? "border-white bg-white"
+                          : "border-white/60 bg-white/20"
+                      }`}
+                    >
+                      {excitedFeature === "saving-words" && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-2.5 h-2.5 rounded-full bg-[#1ba8ff]"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <span className={`font-medium text-sm sm:text-base flex-1 ${
+                    excitedFeature === "saving-words" ? "text-white" : "text-white/90"
+                  }`}>
+                    Saving words from around the web
+                  </span>
+                </motion.label>
+                <motion.label
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
+                    excitedFeature === "daily-reads"
+                      ? "border-white bg-white/20 shadow-lg backdrop-blur-sm"
+                      : "border-white/20 hover:border-white/40 bg-white/10 backdrop-blur-sm"
+                  }`}
+                >
+                  <div className="relative flex items-center justify-center">
+                    <input
+                      type="radio"
+                      name="excitedFeature-cta"
+                      value="daily-reads"
+                      checked={excitedFeature === "daily-reads"}
+                      onChange={(e) => {
+                        setExcitedFeature(e.target.value);
+                        setOtherFeatureText("");
+                        if (state === "success" || state === "error") {
+                          setState("idle");
+                          setErrorMessage("");
+                        }
+                      }}
+                      disabled={state === "loading"}
+                      className="sr-only"
+                    />
+                    <div
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
+                        excitedFeature === "daily-reads"
+                          ? "border-white bg-white"
+                          : "border-white/60 bg-white/20"
+                      }`}
+                    >
+                      {excitedFeature === "daily-reads" && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-2.5 h-2.5 rounded-full bg-[#1ba8ff]"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <span className={`font-medium text-sm sm:text-base flex-1 ${
+                    excitedFeature === "daily-reads" ? "text-white" : "text-white/90"
+                  }`}>
+                    Daily personalized reads on topics I like
+                  </span>
+                </motion.label>
+                <motion.label
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
+                    excitedFeature === "spaced-repetition"
+                      ? "border-white bg-white/20 shadow-lg backdrop-blur-sm"
+                      : "border-white/20 hover:border-white/40 bg-white/10 backdrop-blur-sm"
+                  }`}
+                >
+                  <div className="relative flex items-center justify-center">
+                    <input
+                      type="radio"
+                      name="excitedFeature-cta"
+                      value="spaced-repetition"
+                      checked={excitedFeature === "spaced-repetition"}
+                      onChange={(e) => {
+                        setExcitedFeature(e.target.value);
+                        setOtherFeatureText("");
+                        if (state === "success" || state === "error") {
+                          setState("idle");
+                          setErrorMessage("");
+                        }
+                      }}
+                      disabled={state === "loading"}
+                      className="sr-only"
+                    />
+                    <div
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
+                        excitedFeature === "spaced-repetition"
+                          ? "border-white bg-white"
+                          : "border-white/60 bg-white/20"
+                      }`}
+                    >
+                      {excitedFeature === "spaced-repetition" && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-2.5 h-2.5 rounded-full bg-[#1ba8ff]"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <span className={`font-medium text-sm sm:text-base flex-1 ${
+                    excitedFeature === "spaced-repetition" ? "text-white" : "text-white/90"
+                  }`}>
+                    Spaced repetition for remembering words I learned
+                  </span>
+                </motion.label>
+                <motion.label
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
+                    excitedFeature === "other"
+                      ? "border-white bg-white/20 shadow-lg backdrop-blur-sm"
+                      : "border-white/20 hover:border-white/40 bg-white/10 backdrop-blur-sm"
+                  }`}
+                >
+                  <div className="relative flex items-center justify-center">
+                    <input
+                      type="radio"
+                      name="excitedFeature-cta"
+                      value="other"
+                      checked={excitedFeature === "other"}
+                      onChange={(e) => {
+                        setExcitedFeature(e.target.value);
+                        if (state === "success" || state === "error") {
+                          setState("idle");
+                          setErrorMessage("");
+                        }
+                      }}
+                      disabled={state === "loading"}
+                      className="sr-only"
+                    />
+                    <div
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
+                        excitedFeature === "other"
+                          ? "border-white bg-white"
+                          : "border-white/60 bg-white/20"
+                      }`}
+                    >
+                      {excitedFeature === "other" && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-2.5 h-2.5 rounded-full bg-[#1ba8ff]"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <span className={`font-medium text-sm sm:text-base flex-1 ${
+                    excitedFeature === "other" ? "text-white" : "text-white/90"
+                  }`}>
+                    Other
+                  </span>
+                </motion.label>
+              </div>
+              {excitedFeature === "other" && (
+                <motion.input
+                  type="text"
+                  value={otherFeatureText}
+                  onChange={(e) => {
+                    setOtherFeatureText(e.target.value);
+                    if (state === "success" || state === "error") {
+                      setState("idle");
+                      setErrorMessage("");
+                    }
+                  }}
+                  placeholder="Specify feature or feature request"
+                  disabled={state === "loading"}
+                  whileFocus={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="w-full px-4 py-3 sm:px-5 sm:py-4 rounded-xl border-2 border-white/20 focus:outline-none focus:ring-4 focus:ring-white/30 focus:border-white/40 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 text-sm sm:text-base font-medium shadow-lg placeholder:text-gray-400 bg-white"
+                  required={excitedFeature === "other"}
+                  aria-label="Other feature specification"
+                />
+              )}
+            </div>
+
             <motion.button
               type="submit"
               whileHover={{
@@ -1167,7 +1401,7 @@ export default function Home() {
                 outlineOffset: "2px",
               }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="flex items-center justify-center gap-2 px-8 py-4 sm:px-10 sm:py-5 bg-[#ffae00] text-white rounded-xl shadow-[0px_6px_0px_0px_#c48600] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-out font-semibold leading-6 text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
+              className="flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 bg-[#ffae00] text-white rounded-xl shadow-[0px_6px_0px_0px_#c48600] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-out font-semibold leading-6 text-sm sm:text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
               aria-label="Join waitlist"
             >
               {state === "loading" ? (
@@ -1291,7 +1525,7 @@ export default function Home() {
                 onSubmit={(e) => {
                   handleSubmit(e);
                 }}
-                className="flex flex-col gap-4"
+                className="flex flex-col gap-10"
               >
                 <motion.input
                   type="email"
@@ -1312,6 +1546,225 @@ export default function Home() {
                   autoFocus
                   aria-label="Email address"
                 />
+
+                <div className="space-y-4">
+                  <label className="block text-sm font-semibold text-[#003658] mb-3">
+                   P.S. Which feature are you most excited for?
+                  </label>
+                  <div className="space-y-3">
+                    <motion.label
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
+                        excitedFeature === "saving-words"
+                          ? "border-[#1ba8ff] bg-[#1ba8ff]/5 shadow-md"
+                          : "border-gray-200 hover:border-[#1ba8ff]/50 bg-gray-50/50"
+                      }`}
+                    >
+                      <div className="relative flex items-center justify-center">
+                        <input
+                          type="radio"
+                          name="excitedFeature"
+                          value="saving-words"
+                          checked={excitedFeature === "saving-words"}
+                          onChange={(e) => {
+                            setExcitedFeature(e.target.value);
+                            setOtherFeatureText("");
+                            if (state === "success" || state === "error") {
+                              setState("idle");
+                              setErrorMessage("");
+                            }
+                          }}
+                          disabled={state === "loading"}
+                          className="sr-only"
+                        />
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
+                            excitedFeature === "saving-words"
+                              ? "border-[#1ba8ff] bg-[#1ba8ff]"
+                              : "border-gray-400 bg-white"
+                          }`}
+                        >
+                          {excitedFeature === "saving-words" && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              className="w-2.5 h-2.5 rounded-full bg-white"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <span className={`font-medium text-sm sm:text-base flex-1 ${
+                        excitedFeature === "saving-words" ? "text-[#003658]" : "text-gray-700"
+                      }`}>
+                        Saving words from around the web
+                      </span>
+                    </motion.label>
+                    <motion.label
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
+                        excitedFeature === "daily-reads"
+                          ? "border-[#1ba8ff] bg-[#1ba8ff]/5 shadow-md"
+                          : "border-gray-200 hover:border-[#1ba8ff]/50 bg-gray-50/50"
+                      }`}
+                    >
+                      <div className="relative flex items-center justify-center">
+                        <input
+                          type="radio"
+                          name="excitedFeature"
+                          value="daily-reads"
+                          checked={excitedFeature === "daily-reads"}
+                          onChange={(e) => {
+                            setExcitedFeature(e.target.value);
+                            setOtherFeatureText("");
+                            if (state === "success" || state === "error") {
+                              setState("idle");
+                              setErrorMessage("");
+                            }
+                          }}
+                          disabled={state === "loading"}
+                          className="sr-only"
+                        />
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
+                            excitedFeature === "daily-reads"
+                              ? "border-[#1ba8ff] bg-[#1ba8ff]"
+                              : "border-gray-400 bg-white"
+                          }`}
+                        >
+                          {excitedFeature === "daily-reads" && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              className="w-2.5 h-2.5 rounded-full bg-white"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <span className={`font-medium text-sm sm:text-base flex-1 ${
+                        excitedFeature === "daily-reads" ? "text-[#003658]" : "text-gray-700"
+                      }`}>
+                        Daily personalized reads on topics I enjoy
+                      </span>
+                    </motion.label>
+                    <motion.label
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
+                        excitedFeature === "spaced-repetition"
+                          ? "border-[#1ba8ff] bg-[#1ba8ff]/5 shadow-md"
+                          : "border-gray-200 hover:border-[#1ba8ff]/50 bg-gray-50/50"
+                      }`}
+                    >
+                      <div className="relative flex items-center justify-center">
+                        <input
+                          type="radio"
+                          name="excitedFeature"
+                          value="spaced-repetition"
+                          checked={excitedFeature === "spaced-repetition"}
+                          onChange={(e) => {
+                            setExcitedFeature(e.target.value);
+                            setOtherFeatureText("");
+                            if (state === "success" || state === "error") {
+                              setState("idle");
+                              setErrorMessage("");
+                            }
+                          }}
+                          disabled={state === "loading"}
+                          className="sr-only"
+                        />
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
+                            excitedFeature === "spaced-repetition"
+                              ? "border-[#1ba8ff] bg-[#1ba8ff]"
+                              : "border-gray-400 bg-white"
+                          }`}
+                        >
+                          {excitedFeature === "spaced-repetition" && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              className="w-2.5 h-2.5 rounded-full bg-white"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <span className={`font-medium text-sm sm:text-base flex-1 ${
+                        excitedFeature === "spaced-repetition" ? "text-[#003658]" : "text-gray-700"
+                      }`}>
+                        Spaced repetition for remembering words I learned
+                      </span>
+                    </motion.label>
+                    <motion.label
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
+                        excitedFeature === "other"
+                          ? "border-[#1ba8ff] bg-[#1ba8ff]/5 shadow-md"
+                          : "border-gray-200 hover:border-[#1ba8ff]/50 bg-gray-50/50"
+                      }`}
+                    >
+                      <div className="relative flex items-center justify-center">
+                        <input
+                          type="radio"
+                          name="excitedFeature"
+                          value="other"
+                          checked={excitedFeature === "other"}
+                          onChange={(e) => {
+                            setExcitedFeature(e.target.value);
+                            if (state === "success" || state === "error") {
+                              setState("idle");
+                              setErrorMessage("");
+                            }
+                          }}
+                          disabled={state === "loading"}
+                          className="sr-only"
+                        />
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
+                            excitedFeature === "other"
+                              ? "border-[#1ba8ff] bg-[#1ba8ff]"
+                              : "border-gray-400 bg-white"
+                          }`}
+                        >
+                          {excitedFeature === "other" && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              className="w-2.5 h-2.5 rounded-full bg-white"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <span className={`font-medium text-sm sm:text-base flex-1 ${
+                        excitedFeature === "other" ? "text-[#003658]" : "text-gray-700"
+                      }`}>
+                        Other
+                      </span>
+                    </motion.label>
+                  </div>
+                  {excitedFeature === "other" && (
+                    <motion.input
+                      type="text"
+                      value={otherFeatureText}
+                      onChange={(e) => {
+                        setOtherFeatureText(e.target.value);
+                        if (state === "success" || state === "error") {
+                          setState("idle");
+                          setErrorMessage("");
+                        }
+                      }}
+                      placeholder="Specify feature or feature request"
+                      disabled={state === "loading"}
+                      whileFocus={{ scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                      className="w-full px-5 py-4 rounded-xl border-2 border-gray-300 focus:outline-none focus:ring-4 focus:ring-[#1ba8ff]/20 focus:border-[#1ba8ff] disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 text-base font-medium shadow-sm placeholder:text-gray-400"
+                      required={excitedFeature === "other"}
+                      aria-label="Other feature specification"
+                    />
+                  )}
+                </div>
                 <motion.button
                   type="submit"
                   whileHover={{

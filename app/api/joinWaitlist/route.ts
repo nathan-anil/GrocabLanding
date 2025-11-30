@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { email } = body;
+    const { email, excitedFeature } = body;
 
     // Validate email
     const validation = validateEmail(email);
@@ -137,11 +137,23 @@ export async function POST(request: NextRequest) {
 
     // Save to Firestore
     const now = new Date();
-    await waitlistCollection.add({
+    const waitlistData: {
+      email: string;
+      createdAt: Date;
+      createdAtTimestamp: number;
+      excitedFeature?: string;
+    } = {
       email: normalizedEmail,
       createdAt: now,
       createdAtTimestamp: now.getTime(),
-    });
+    };
+
+    // Add excitedFeature if provided
+    if (excitedFeature && typeof excitedFeature === 'string' && excitedFeature.trim()) {
+      waitlistData.excitedFeature = excitedFeature.trim();
+    }
+
+    await waitlistCollection.add(waitlistData);
 
     // Return success response
     return NextResponse.json(
