@@ -152,26 +152,38 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error in /api/joinWaitlist:', error);
+    // Always log full error details for debugging
+    const errorDetails = {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      name: error instanceof Error ? error.name : undefined,
+    };
     
-    // Log more details in development
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Error details:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        stack: error instanceof Error ? error.stack : undefined,
-      });
+    console.error('Error in /api/joinWaitlist:', errorDetails);
+    
+    // Check for common Firebase errors
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    
+    // Provide more helpful error messages
+    let userFriendlyError = 'An error occurred. Please try again later.';
+    
+    if (errorMessage.includes('Missing Firebase Admin SDK credentials')) {
+      userFriendlyError = 'Server configuration error. Please contact support.';
+      console.error('Firebase credentials missing in production!');
+    } else if (errorMessage.includes('Failed to initialize Firebase Admin SDK')) {
+      userFriendlyError = 'Server configuration error. Please contact support.';
+      console.error('Firebase initialization failed:', errorDetails);
+    } else if (errorMessage.includes('PERMISSION_DENIED') || errorMessage.includes('permission')) {
+      userFriendlyError = 'Permission error. Please contact support.';
+      console.error('Firebase permission error:', errorDetails);
+    } else if (process.env.NODE_ENV === 'development') {
+      userFriendlyError = `Development Error: ${errorMessage}`;
     }
-
-    // Provide more helpful error messages in development
-    const errorMessage = 
-      process.env.NODE_ENV === 'development' && error instanceof Error
-        ? `Development Error: ${error.message}`
-        : 'An error occurred. Please try again later.';
 
     return NextResponse.json(
       {
         success: false,
-        error: errorMessage,
+        error: userFriendlyError,
       },
       { status: 500 }
     );

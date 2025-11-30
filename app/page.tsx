@@ -144,9 +144,10 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="w-full h-[70px] sm:h-[80px] flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-24"
+        className="w-full h-[70px] sm:h-[80px] bg-white"
       >
-        <div className="flex items-center gap-2">
+        <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-24">
+          <div className="flex items-center gap-2">
           <motion.div
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
@@ -182,6 +183,7 @@ export default function Home() {
           </svg>
           Join waitlist
         </motion.button>
+        </div>
       </motion.header>
 
       {/* Fixed Navigation Bar (appears after 50% scroll) */}
@@ -192,29 +194,29 @@ export default function Home() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -70, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed top-0 left-0 right-0 z-40 w-full h-[70px] sm:h-[80px] flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-24 bg-white/95 backdrop-blur-md shadow-md"
+            className="fixed top-0 left-0 right-0 z-40 w-full h-[70px] sm:h-[80px] bg-white shadow-md"
           >
-            <div className="flex items-center gap-2">
+            <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-24">
+              <div className="flex items-center gap-2">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <Image
-                  src={grocabLogo}
-                  alt="Grocab Logo"
-                  width={120}
-                  height={58}
-                  className="h-auto"
-                  priority
-                />
+            <Image
+              src={grocabLogo}
+              alt="Grocab Logo"
+              width={120}
+              height={58}
+              className="h-auto w-20 sm:w-24 md:w-[120px]"
+              priority
+            />
               </motion.div>
             </div>
             <motion.button
               onClick={() => setIsModalOpen(true)}
               whileHover={{ y: 2, boxShadow: "0px 4px 0px 0px #c48600" }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-7 py-3 bg-[#ffae00] text-white rounded-lg shadow-[0px_6px_0px_0px_#c48600] transition-all duration-300 ease-out font-medium leading-6"
-              style={{ fontSize: "20px" }}
+              className="flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-2.5 md:px-7 md:py-3 bg-[#ffae00] text-white rounded-lg shadow-[0px_6px_0px_0px_#c48600] transition-all duration-300 ease-out font-medium leading-6 text-sm sm:text-base md:text-lg"
             >
               <svg
                 className="w-5 h-5"
@@ -231,6 +233,7 @@ export default function Home() {
               </svg>
               Join waitlist
             </motion.button>
+            </div>
           </motion.header>
         )}
       </AnimatePresence>
@@ -432,7 +435,10 @@ export default function Home() {
                     letterSpacing: "1.2px",
                   }}
                 >
-                  01
+                  <span className="text-gray-500 opacity-50 font-semibold">
+                    01/
+                  </span>
+                  <span className="text-[#1BA8FF]"> SAVE</span>
                 </span>
                 <h2
                   className="font-semibold text-[#003658] text-2xl sm:text-3xl md:text-4xl"
@@ -586,7 +592,10 @@ export default function Home() {
                     letterSpacing: "1.2px",
                   }}
                 >
-                  02
+                  <span className="text-gray-500 opacity-50 font-semibold">
+                    02/
+                  </span>
+                  <span className="text-[#1BA8FF]"> LEARN</span>
                 </span>
                 <h2
                   className="font-semibold text-[#003658] text-2xl sm:text-3xl md:text-4xl"
@@ -711,13 +720,17 @@ export default function Home() {
                     letterSpacing: "1.2px",
                   }}
                 >
-                  03
+                  <span className="text-gray-500 opacity-50 font-semibold">
+                    03/
+                  </span>
+                  <span className="text-[#1BA8FF]"> REMEMBER</span>
                 </span>
                 <h2
                   className="font-semibold text-[#003658] text-2xl sm:text-3xl md:text-4xl"
                   style={{ lineHeight: "1.2" }}
                 >
-                  Remember your words long-term with byte sized exercises and smart spaced repetition
+                  Remember forever with byte sized exercises and
+                  smart spaced repetition
                 </h2>
               </div>
               <p
@@ -762,6 +775,7 @@ export default function Home() {
                     Smart anki style spaced repetition
                   </p>
                 </motion.div>
+                
                 <motion.div
                   variants={fadeInLeft}
                   className="flex items-center gap-2"
@@ -788,6 +802,34 @@ export default function Home() {
                     style={{ lineHeight: "1.5" }}
                   >
                     Simple recall and usage checks
+                  </p>
+                </motion.div>
+                <motion.div
+                  variants={fadeInLeft}
+                  className="flex items-center gap-2"
+                >
+                  <motion.svg
+                    className="w-4 h-4 flex-shrink-0"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
+                    <path
+                      d="M5 8L7 10L11 6"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </motion.svg>
+                  <p
+                    className="text-gray-700 font-medium text-sm sm:text-base"
+                    style={{ lineHeight: "1.5" }}
+                  >
+                    Spend just 2 minutes a day
                   </p>
                 </motion.div>
               </motion.div>
