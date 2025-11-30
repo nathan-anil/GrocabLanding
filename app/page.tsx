@@ -15,31 +15,37 @@ import featureCard3 from "@/public/images/featurecard3.png";
 
 type WaitlistState = "idle" | "loading" | "success" | "error";
 
-// Animation variants for scroll-based animations
+// Premium animation variants with refined timing
 const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6 },
+    transition: {
+      duration: 0.5,
+    },
   },
 };
 
 const fadeInLeft = {
-  hidden: { opacity: 0, x: -30 },
+  hidden: { opacity: 0, x: -24 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.6 },
+    transition: {
+      duration: 0.5,
+    },
   },
 };
 
 const fadeInRight = {
-  hidden: { opacity: 0, x: 30 },
+  hidden: { opacity: 0, x: 24 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.6 },
+    transition: {
+      duration: 0.5,
+    },
   },
 };
 
@@ -47,7 +53,9 @@ const fadeIn = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.8 },
+    transition: {
+      duration: 0.6,
+    },
   },
 };
 
@@ -56,7 +64,8 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
     },
   },
 };
@@ -148,41 +157,51 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-24">
           <div className="flex items-center gap-2">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3 }}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Image
+                src={grocabLogo}
+                alt="Grocab Logo"
+                width={120}
+                height={58}
+                className="h-auto w-20 sm:w-24 md:w-[120px]"
+                priority
+              />
+            </motion.div>
+          </div>
+          <motion.button
+            onClick={() => setIsModalOpen(true)}
+            whileHover={{
+              y: 2,
+              boxShadow: "0px 4px 0px 0px #c48600",
+              scale: 1.02,
+            }}
+            whileTap={{ scale: 0.98, y: 4 }}
+            whileFocus={{
+              outline: "2px solid #1ba8ff",
+              outlineOffset: "2px",
+            }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            className="flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-2.5 md:px-7 md:py-3 bg-[#ffae00] text-white rounded-xl shadow-[0px_6px_0px_0px_#c48600] transition-all duration-200 ease-out font-semibold leading-6 text-sm sm:text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-[#1ba8ff] focus:ring-offset-2"
+            aria-label="Join waitlist"
           >
-            <Image
-              src={grocabLogo}
-              alt="Grocab Logo"
-              width={120}
-              height={58}
-              className="h-auto w-20 sm:w-24 md:w-[120px]"
-              priority
-            />
-          </motion.div>
-        </div>
-        <motion.button
-          onClick={() => setIsModalOpen(true)}
-          whileHover={{ y: 2, boxShadow: "0px 4px 0px 0px #c48600" }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-2.5 md:px-7 md:py-3 bg-[#ffae00] text-white rounded-lg shadow-[0px_6px_0px_0px_#c48600] transition-all duration-300 ease-out font-medium leading-6 text-sm sm:text-base md:text-lg"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-            />
-          </svg>
-          Join waitlist
-        </motion.button>
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+              />
+            </svg>
+            Join waitlist
+          </motion.button>
         </div>
       </motion.header>
 
@@ -198,65 +217,75 @@ export default function Home() {
           >
             <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-24">
               <div className="flex items-center gap-2">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Image
+                    src={grocabLogo}
+                    alt="Grocab Logo"
+                    width={120}
+                    height={58}
+                    className="h-auto w-20 sm:w-24 md:w-[120px]"
+                    priority
+                  />
+                </motion.div>
+              </div>
+              <motion.button
+                onClick={() => setIsModalOpen(true)}
+                whileHover={{
+                  y: 2,
+                  boxShadow: "0px 4px 0px 0px #c48600",
+                  scale: 1.02,
+                }}
+                whileTap={{ scale: 0.98, y: 4 }}
+                whileFocus={{
+                  outline: "2px solid #1ba8ff",
+                  outlineOffset: "2px",
+                }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                className="flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-2.5 md:px-7 md:py-3 bg-[#ffae00] text-white rounded-xl shadow-[0px_6px_0px_0px_#c48600] transition-all duration-200 ease-out font-semibold leading-6 text-sm sm:text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-[#1ba8ff] focus:ring-offset-2"
+                aria-label="Join waitlist"
               >
-            <Image
-              src={grocabLogo}
-              alt="Grocab Logo"
-              width={120}
-              height={58}
-              className="h-auto w-20 sm:w-24 md:w-[120px]"
-              priority
-            />
-              </motion.div>
-            </div>
-            <motion.button
-              onClick={() => setIsModalOpen(true)}
-              whileHover={{ y: 2, boxShadow: "0px 4px 0px 0px #c48600" }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-2.5 md:px-7 md:py-3 bg-[#ffae00] text-white rounded-lg shadow-[0px_6px_0px_0px_#c48600] transition-all duration-300 ease-out font-medium leading-6 text-sm sm:text-base md:text-lg"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                />
-              </svg>
-              Join waitlist
-            </motion.button>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                  />
+                </svg>
+                Join waitlist
+              </motion.button>
             </div>
           </motion.header>
         )}
       </AnimatePresence>
 
       {/* Hero Section */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-12 sm:py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+      <section className="w-full flex items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 h-[calc(100vh-70px)] sm:h-[calc(100vh-80px)]">
+        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center w-full">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.2 }}
             variants={fadeInUp}
-            className="space-y-8"
+            className="space-y-6 sm:space-y-8"
           >
             <h1
-              className="font-bold text-[#003658] text-3xl sm:text-4xl md:text-5xl"
-              style={{ lineHeight: "1.2" }}
+              className="font-bold text-[#003658] text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight"
+              style={{ lineHeight: "1.1", letterSpacing: "-0.02em" }}
             >
-              Learn high-impact vocabulary in just{" "}
+              Learn powerful vocabulary in just{" "}
               <motion.span
-                className="text-[#1ba8ff] inline-block"
+                className="text-[#1ba8ff]  relative"
                 whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 5 minutes a day
               </motion.span>
@@ -268,27 +297,32 @@ export default function Home() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
               variants={staggerContainer}
-              className="space-y-4 sm:space-y-6"
+              className="space-y-4 sm:space-y-5"
             >
               <motion.div
                 variants={fadeInUp}
-                className="flex items-center gap-3"
+                className="flex items-center gap-3 sm:gap-4"
               >
-                <svg
-                  className="w-4 h-4 flex-shrink-0"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
-                  <path
-                    d="M5 8L7 10L11 6"
-                    stroke="white"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                  <svg
+                    className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="10" cy="10" r="10" fill="#1BA8FF" />
+                    <path
+                      d="M6 10L9 13L14 7"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </motion.div>
                 <p
                   className="font-medium text-[#003658] text-base sm:text-lg md:text-xl"
                   style={{ lineHeight: "1.5" }}
@@ -298,25 +332,28 @@ export default function Home() {
               </motion.div>
               <motion.div
                 variants={fadeInUp}
-                className="flex items-center gap-3"
+                className="flex items-center gap-3 sm:gap-4"
               >
-                <motion.svg
-                  className="w-4 h-4 flex-shrink-0"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
-                  <path
-                    d="M5 8L7 10L11 6"
-                    stroke="white"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </motion.svg>
+                  <svg
+                    className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="10" cy="10" r="10" fill="#1BA8FF" />
+                    <path
+                      d="M6 10L9 13L14 7"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </motion.div>
                 <p
                   className="font-medium text-[#003658] text-base sm:text-lg md:text-xl"
                   style={{ lineHeight: "1.5" }}
@@ -326,23 +363,28 @@ export default function Home() {
               </motion.div>
               <motion.div
                 variants={fadeInUp}
-                className="flex items-center gap-3"
+                className="flex items-center gap-3 sm:gap-4"
               >
-                <svg
-                  className="w-4 h-4 flex-shrink-0"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
-                  <path
-                    d="M5 8L7 10L11 6"
-                    stroke="white"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                  <svg
+                    className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="10" cy="10" r="10" fill="#1BA8FF" />
+                    <path
+                      d="M6 10L9 13L14 7"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </motion.div>
                 <p
                   className="font-medium text-[#003658] text-base sm:text-lg md:text-xl"
                   style={{ lineHeight: "1.5" }}
@@ -352,23 +394,55 @@ export default function Home() {
               </motion.div>
             </motion.div>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-              <a
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 pt-2">
+              <motion.a
                 href="#features"
-                className="font-medium text-center text-sm sm:text-base"
-                style={{
-                  lineHeight: "1.5",
-                  color: "rgba(0,54,88,0.6)",
+                onClick={(e) => {
+                  e.preventDefault();
+                  const element = document.getElementById("features");
+                  if (element) {
+                    element.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }
                 }}
+                className="font-semibold text-center text-base sm:text-lg text-[#003658]/70 hover:text-[#003658] transition-colors duration-200 flex items-center gap-2"
+                style={{ lineHeight: "1.5" }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 See how it works
-              </a>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="inline-block"
+                >
+                  <path
+                    d="M7.82054 20.7313C8.21107 21.1218 8.84423 21.1218 9.23476 20.7313L15.8792 14.0868C17.0505 12.9155 17.0508 11.0167 15.88 9.84497L9.3097 3.26958C8.91918 2.87905 8.28601 2.87905 7.89549 3.26958C7.50497 3.6601 7.50497 4.29327 7.89549 4.68379L14.4675 11.2558C14.8581 11.6464 14.8581 12.2795 14.4675 12.67L7.82054 19.317C7.43002 19.7076 7.43002 20.3407 7.82054 20.7313Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </motion.a>
               <motion.button
                 onClick={() => setIsModalOpen(true)}
-                whileHover={{ y: 2, boxShadow: "0px 4px 0px 0px #c48600" }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 bg-[#ffae00] text-white rounded-lg shadow-[0px_6px_0px_0px_#c48600] transition-all duration-300 ease-out font-medium text-sm sm:text-base"
+                whileHover={{
+                  y: 2,
+                  boxShadow: "0px 4px 0px 0px #c48600",
+                  scale: 1.02,
+                }}
+                whileTap={{ scale: 0.98, y: 4 }}
+                whileFocus={{
+                  outline: "2px solid #1ba8ff",
+                  outlineOffset: "2px",
+                }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                className="flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 bg-[#ffae00] text-white rounded-xl shadow-[0px_6px_0px_0px_#c48600] transition-all duration-200 ease-out font-semibold text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-[#1ba8ff] focus:ring-offset-2"
                 style={{ lineHeight: "1.5" }}
+                aria-label="Join waitlist"
               >
                 <svg
                   className="w-4 h-4"
@@ -397,15 +471,15 @@ export default function Home() {
             className="relative flex justify-center items-center"
           >
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.5 }}
-              className="relative w-full max-w-[300px]"
+              whileHover={{ scale: 1.03, y: -8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="relative w-full max-w-[320px] sm:max-w-[360px]"
             >
               <Image
                 src={mobileMockup}
                 alt="Grocab mobile app mockup showing dictionary interface"
-                width={300}
-                className="w-full h-auto rounded-[2rem] shadow-2xl"
+                width={360}
+                className="w-full h-auto rounded-[2.5rem] shadow-2xl"
                 priority
               />
             </motion.div>
@@ -416,10 +490,10 @@ export default function Home() {
       {/* Feature Section 1: Save words from web */}
       <section
         id="features"
-        className="w-full bg-gray-50 py-12 sm:py-16 md:py-24"
+        className="w-full bg-gray-50 py-16 sm:py-20 md:py-28 lg:py-32"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -427,28 +501,28 @@ export default function Home() {
               variants={fadeInLeft}
               className="space-y-4 sm:space-y-6"
             >
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <span
                   className="inline-block text-[#1BA8FF] font-bold uppercase tracking-wider text-xs sm:text-sm"
                   style={{
                     lineHeight: "1.4",
-                    letterSpacing: "1.2px",
+                    letterSpacing: "1.5px",
                   }}
                 >
-                  <span className="text-gray-500 opacity-50 font-semibold">
+                  <span className="text-gray-500 opacity-60 font-semibold">
                     01/
                   </span>
                   <span className="text-[#1BA8FF]"> SAVE</span>
                 </span>
                 <h2
-                  className="font-semibold text-[#003658] text-2xl sm:text-3xl md:text-4xl"
-                  style={{ lineHeight: "1.2" }}
+                  className="font-bold text-[#003658] text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight"
+                  style={{ lineHeight: "1.1", letterSpacing: "-0.02em" }}
                 >
                   Save words from anywhere or generate new ones instantly
                 </h2>
               </div>
               <p
-                className="text-xl text-gray-700"
+                className="text-lg sm:text-xl md:text-2xl text-gray-700"
                 style={{ lineHeight: "1.6" }}
               >
                 Find words to learn that are relevant to your interests and
@@ -459,31 +533,34 @@ export default function Home() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 variants={staggerContainer}
-                className="space-y-3"
+                className="space-y-4 sm:space-y-5"
               >
                 <motion.div
                   variants={fadeInLeft}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3 sm:gap-4"
                 >
-                  <motion.svg
-                    className="w-4 h-4 flex-shrink-0"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
-                    <path
-                      d="M5 8L7 10L11 6"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </motion.svg>
+                    <svg
+                      className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="10" cy="10" r="10" fill="#1BA8FF" />
+                      <path
+                        d="M6 10L9 13L14 7"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.div>
                   <p
-                    className="text-gray-700 font-medium text-sm sm:text-base"
+                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Free chrome extension
@@ -491,27 +568,30 @@ export default function Home() {
                 </motion.div>
                 <motion.div
                   variants={fadeInLeft}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3 sm:gap-4"
                 >
-                  <motion.svg
-                    className="w-4 h-4 flex-shrink-0"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
-                    <path
-                      d="M5 8L7 10L11 6"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </motion.svg>
+                    <svg
+                      className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="10" cy="10" r="10" fill="#1BA8FF" />
+                      <path
+                        d="M6 10L9 13L14 7"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.div>
                   <p
-                    className="text-gray-700 font-medium text-sm sm:text-base"
+                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Generate words from your custom topics
@@ -519,27 +599,30 @@ export default function Home() {
                 </motion.div>
                 <motion.div
                   variants={fadeInLeft}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3 sm:gap-4"
                 >
-                  <motion.svg
-                    className="w-4 h-4 flex-shrink-0"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
-                    <path
-                      d="M5 8L7 10L11 6"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </motion.svg>
+                    <svg
+                      className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="10" cy="10" r="10" fill="#1BA8FF" />
+                      <path
+                        d="M6 10L9 13L14 7"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.div>
                   <p
-                    className="text-gray-700 font-medium text-sm sm:text-base"
+                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Set your difficulty level
@@ -556,27 +639,27 @@ export default function Home() {
               variants={fadeInRight}
               className="relative flex justify-center items-center"
             >
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.5 }}
-                className="relative w-full overflow-hidden rounded-xl"
-              >
-                <Image
-                  src={thirdSectionImage}
-                  alt="Grocab save words from web interface"
-                  className="w-full h-auto shadow-xl"
-                  priority
-                />
-              </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.02, y: -4 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="relative w-full overflow-hidden"
+            >
+              <Image
+                src={thirdSectionImage}
+                alt="Grocab save words from web interface"
+                className="w-full h-auto"
+                priority
+              />
+            </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Feature Section 2: Daily Personalized Read */}
-      <section className="w-full py-12 sm:py-16 md:py-24">
+      <section className="w-full py-16 sm:py-20 md:py-28 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -584,28 +667,28 @@ export default function Home() {
               variants={fadeInLeft}
               className="space-y-4 sm:space-y-6"
             >
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <span
                   className="inline-block text-[#1BA8FF] font-bold uppercase tracking-wider text-xs sm:text-sm"
                   style={{
                     lineHeight: "1.4",
-                    letterSpacing: "1.2px",
+                    letterSpacing: "1.5px",
                   }}
                 >
-                  <span className="text-gray-500 opacity-50 font-semibold">
+                  <span className="text-gray-500 opacity-60 font-semibold">
                     02/
                   </span>
                   <span className="text-[#1BA8FF]"> LEARN</span>
                 </span>
                 <h2
-                  className="font-semibold text-[#003658] text-2xl sm:text-3xl md:text-4xl"
-                  style={{ lineHeight: "1.2" }}
+                  className="font-bold text-[#003658] text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight"
+                  style={{ lineHeight: "1.1", letterSpacing: "-0.02em" }}
                 >
-                  Learn your words with daily reads on the topics you care about
+                  Learn your words with tailored daily reads
                 </h2>
               </div>
               <p
-                className="text-xl text-gray-700"
+                className="text-lg sm:text-xl md:text-2xl text-gray-700"
                 style={{ lineHeight: "1.6" }}
               >
                 Your brain remembers best with engaging content. Reading vocab
@@ -617,31 +700,34 @@ export default function Home() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 variants={staggerContainer}
-                className="space-y-3"
+                className="space-y-4 sm:space-y-5"
               >
                 <motion.div
                   variants={fadeInLeft}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3 sm:gap-4"
                 >
-                  <motion.svg
-                    className="w-4 h-4 flex-shrink-0"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
-                    <path
-                      d="M5 8L7 10L11 6"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </motion.svg>
+                    <svg
+                      className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="10" cy="10" r="10" fill="#1BA8FF" />
+                      <path
+                        d="M6 10L9 13L14 7"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.div>
                   <p
-                    className="text-gray-700 font-medium text-sm sm:text-base"
+                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Set your story time (2min, 5min, 10min)
@@ -649,25 +735,30 @@ export default function Home() {
                 </motion.div>
                 <motion.div
                   variants={fadeInLeft}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3 sm:gap-4"
                 >
-                  <svg
-                    className="w-4 h-4 flex-shrink-0"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
-                    <path
-                      d="M5 8L7 10L11 6"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                    <svg
+                      className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="10" cy="10" r="10" fill="#1BA8FF" />
+                      <path
+                        d="M6 10L9 13L14 7"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.div>
                   <p
-                    className="text-gray-700 font-medium text-sm sm:text-base"
+                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Set your story topics of interest
@@ -686,13 +777,13 @@ export default function Home() {
             >
               <motion.div
                 whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.5 }}
-                className="relative w-full overflow-hidden rounded-xl"
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="relative w-full overflow-hidden"
               >
                 <Image
                   src={storyFrame1}
                   alt="Grocab story frame showing personalized reading interface"
-                  className="w-full h-auto shadow-xl"
+                  className="w-full h-auto"
                   priority
                 />
               </motion.div>
@@ -702,9 +793,9 @@ export default function Home() {
       </section>
 
       {/* Feature Section 3: Byte-sized exercises */}
-      <section className="w-full bg-white py-12 sm:py-16 md:py-24">
+      <section className="w-full bg-white py-16 sm:py-20 md:py-28 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -712,29 +803,28 @@ export default function Home() {
               variants={fadeInLeft}
               className="space-y-4 sm:space-y-6"
             >
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <span
                   className="inline-block text-[#1BA8FF] font-bold uppercase tracking-wider text-xs sm:text-sm"
                   style={{
                     lineHeight: "1.4",
-                    letterSpacing: "1.2px",
+                    letterSpacing: "1.5px",
                   }}
                 >
-                  <span className="text-gray-500 opacity-50 font-semibold">
+                  <span className="text-gray-500 opacity-60 font-semibold">
                     03/
                   </span>
                   <span className="text-[#1BA8FF]"> REMEMBER</span>
                 </span>
                 <h2
-                  className="font-semibold text-[#003658] text-2xl sm:text-3xl md:text-4xl"
-                  style={{ lineHeight: "1.2" }}
+                  className="font-bold text-[#003658] text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight"
+                  style={{ lineHeight: "1.1", letterSpacing: "-0.02em" }}
                 >
-                  Remember forever with byte sized exercises and
-                  smart spaced repetition
+                  Remember forever with byte sized exercises
                 </h2>
               </div>
               <p
-                className="text-xl text-gray-700"
+                className="text-lg sm:text-xl md:text-2xl text-gray-700"
                 style={{ lineHeight: "1.6" }}
               >
                 Don&apos;t just learn new words, but actually retain them with
@@ -745,60 +835,66 @@ export default function Home() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 variants={staggerContainer}
-                className="space-y-3"
+                className="space-y-4 sm:space-y-5"
               >
                 <motion.div
                   variants={fadeInLeft}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3 sm:gap-4"
                 >
-                  <motion.svg
-                    className="w-4 h-4 flex-shrink-0"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
-                    <path
-                      d="M5 8L7 10L11 6"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </motion.svg>
+                    <svg
+                      className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="10" cy="10" r="10" fill="#1BA8FF" />
+                      <path
+                        d="M6 10L9 13L14 7"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.div>
                   <p
-                    className="text-gray-700 font-medium text-sm sm:text-base"
+                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Smart anki style spaced repetition
                   </p>
                 </motion.div>
-                
+
                 <motion.div
                   variants={fadeInLeft}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3 sm:gap-4"
                 >
-                  <motion.svg
-                    className="w-4 h-4 flex-shrink-0"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
-                    <path
-                      d="M5 8L7 10L11 6"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </motion.svg>
+                    <svg
+                      className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="10" cy="10" r="10" fill="#1BA8FF" />
+                      <path
+                        d="M6 10L9 13L14 7"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.div>
                   <p
-                    className="text-gray-700 font-medium text-sm sm:text-base"
+                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Simple recall and usage checks
@@ -806,27 +902,30 @@ export default function Home() {
                 </motion.div>
                 <motion.div
                   variants={fadeInLeft}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-3 sm:gap-4"
                 >
-                  <motion.svg
-                    className="w-4 h-4 flex-shrink-0"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    <circle cx="8" cy="8" r="8" fill="#1BA8FF" />
-                    <path
-                      d="M5 8L7 10L11 6"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </motion.svg>
+                    <svg
+                      className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="10" cy="10" r="10" fill="#1BA8FF" />
+                      <path
+                        d="M6 10L9 13L14 7"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.div>
                   <p
-                    className="text-gray-700 font-medium text-sm sm:text-base"
+                    className="text-gray-700 font-semibold text-base sm:text-lg md:text-xl"
                     style={{ lineHeight: "1.5" }}
                   >
                     Spend just 2 minutes a day
@@ -843,68 +942,69 @@ export default function Home() {
               variants={fadeInRight}
               className="relative flex justify-center items-center"
             >
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.5 }}
-                className="relative w-full overflow-hidden rounded-xl"
-              >
-                <Image
-                  src={secondSectionImage}
-                  alt="Grocab byte-sized exercises interface"
-                  className="w-full h-auto shadow-xl"
-                  priority
-                />
-              </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.02, y: -4 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="relative w-full overflow-hidden"
+            >
+              <Image
+                src={secondSectionImage}
+                alt="Grocab byte-sized exercises interface"
+                className="w-full h-auto"
+                priority
+              />
+            </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Features Grid Section */}
-      <section className="w-full py-12 sm:py-16 md:py-24 bg-[#EEF2F5]">
+      <section className="w-full py-16 sm:py-20 md:py-28 lg:py-32 bg-[#EEF2F5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={staggerContainer}
-            className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6"
+            className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10"
           >
             {/* Card 1: Set topics */}
             <motion.div
               variants={fadeInUp}
               whileHover={{
-                y: -4,
+                y: -8,
+                scale: 1.02,
                 boxShadow:
-                  "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                  "0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.1)",
               }}
-              className="bg-white rounded-3xl shadow-lg overflow-hidden"
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-white rounded-3xl shadow-xl overflow-hidden"
             >
-              <div className="px-5 pt-5">
+              <div className="px-6 sm:px-8 pt-6 sm:pt-8">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                  className="relative w-full overflow-hidden"
-                  style={{ aspectRatio: "425/275", borderRadius: "15px" }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="relative w-full overflow-hidden rounded-2xl"
+                  style={{ aspectRatio: "425/275" }}
                 >
                   <Image
                     src={featureCard1}
                     alt="Set topics you're interested in"
                     className="w-full h-full object-cover"
-                    style={{ borderRadius: "15px" }}
                   />
                 </motion.div>
               </div>
-              <div className="px-6 pt-5 pb-6">
+              <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-8 sm:pb-10">
                 <h3
-                  className="font-semibold text-black mb-3 text-lg sm:text-xl"
-                  style={{ lineHeight: "1.5" }}
+                  className="font-bold text-[#003658] mb-4 text-xl sm:text-2xl md:text-3xl tracking-tight"
+                  style={{ lineHeight: "1.2", letterSpacing: "-0.02em" }}
                 >
                   Learn on your own terms
                 </h3>
                 <p
-                  className="text-[#003658] text-sm sm:text-base mt-2"
-                  style={{ lineHeight: "1.5" }}
+                  className="text-gray-700 text-base sm:text-lg md:text-xl font-medium"
+                  style={{ lineHeight: "1.6" }}
                 >
                   Be entertained with stories, learn about current events, or
                   expand your knowledge with non-fiction.
@@ -916,41 +1016,38 @@ export default function Home() {
             <motion.div
               variants={fadeInUp}
               whileHover={{
-                y: -4,
+                y: -8,
+                scale: 1.02,
                 boxShadow:
-                  "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                  "0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.1)",
               }}
-              className="bg-white rounded-3xl shadow-lg overflow-hidden"
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-white rounded-3xl shadow-xl overflow-hidden"
             >
-              <div className="px-5 pt-5">
+              <div className="px-6 sm:px-8 pt-6 sm:pt-8">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                  className="relative w-full overflow-hidden"
-                  style={{ aspectRatio: "425/275", borderRadius: "15px" }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="relative w-full overflow-hidden rounded-2xl"
+                  style={{ aspectRatio: "425/275" }}
                 >
                   <Image
                     src={featureCard2}
                     alt="Set custom difficulty levels"
                     className="w-full h-full object-cover"
-                    style={{ borderRadius: "15px" }}
                   />
                 </motion.div>
               </div>
-              <div className="px-6 pt-5 pb-6">
+              <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-8 sm:pb-10">
                 <h3
-                  className="font-semibold text-black mb-3"
-                  style={{ fontSize: "19px", lineHeight: "1.5" }}
+                  className="font-bold text-[#003658] mb-4 text-xl sm:text-2xl md:text-3xl tracking-tight"
+                  style={{ lineHeight: "1.2", letterSpacing: "-0.02em" }}
                 >
                   Set custom difficulty levels
                 </h3>
                 <p
-                  className="text-[#003658]"
-                  style={{
-                    fontSize: "15px",
-                    lineHeight: "1.5",
-                    marginTop: "8px",
-                  }}
+                  className="text-gray-700 text-base sm:text-lg md:text-xl font-medium"
+                  style={{ lineHeight: "1.6" }}
                 >
                   Set your vocabulary difficulty level to match your learning
                   goals.
@@ -962,41 +1059,38 @@ export default function Home() {
             <motion.div
               variants={fadeInUp}
               whileHover={{
-                y: -4,
+                y: -8,
+                scale: 1.02,
                 boxShadow:
-                  "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                  "0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.1)",
               }}
-              className="bg-white rounded-3xl shadow-lg overflow-hidden"
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-white rounded-3xl shadow-xl overflow-hidden"
             >
-              <div className="px-5 pt-5">
+              <div className="px-6 sm:px-8 pt-6 sm:pt-8">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                  className="relative w-full overflow-hidden"
-                  style={{ aspectRatio: "425/275", borderRadius: "15px" }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="relative w-full overflow-hidden rounded-2xl"
+                  style={{ aspectRatio: "425/275" }}
                 >
                   <Image
                     src={featureCard3}
                     alt="Watch your garden grow"
                     className="w-full h-full object-cover"
-                    style={{ borderRadius: "15px" }}
                   />
                 </motion.div>
               </div>
-              <div className="px-6 pt-5 pb-6">
+              <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-8 sm:pb-10">
                 <h3
-                  className="font-semibold text-black mb-3"
-                  style={{ fontSize: "19px", lineHeight: "1.5" }}
+                  className="font-bold text-[#003658] mb-4 text-xl sm:text-2xl md:text-3xl tracking-tight"
+                  style={{ lineHeight: "1.2", letterSpacing: "-0.02em" }}
                 >
                   Watch your garden grow
                 </h3>
                 <p
-                  className="text-[#003658]"
-                  style={{
-                    fontSize: "15px",
-                    lineHeight: "1.5",
-                    marginTop: "8px",
-                  }}
+                  className="text-gray-700 text-base sm:text-lg md:text-xl font-medium"
+                  style={{ lineHeight: "1.6" }}
                 >
                   Get rewarded from your learning journey and expand your
                   garden.
@@ -1010,7 +1104,7 @@ export default function Home() {
       {/* CTA Section */}
       <section
         id="cta-section"
-        className="w-full py-12 sm:py-16 md:py-24"
+        className="w-full py-20 sm:py-24 md:py-32 lg:py-40"
         style={{
           background:
             "linear-gradient(180deg, #8CD3FF 0%, #68C5FF 15.38%, #34B1FF 37.98%, #34B1FF 68.75%, #34B1FF 100%)",
@@ -1022,8 +1116,8 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="font-semibold text-white mb-4 sm:mb-6 text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
-            style={{ lineHeight: "1.2" }}
+            className="font-bold text-white mb-6 sm:mb-8 text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight"
+            style={{ lineHeight: "1.1", letterSpacing: "-0.02em" }}
           >
             Join the waitlist
           </motion.h2>
@@ -1032,18 +1126,17 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="text-lg sm:text-xl md:text-2xl text-white/90 mb-6 sm:mb-8"
+            className="text-xl sm:text-2xl md:text-3xl text-white/95 mb-10 sm:mb-12 font-medium"
             style={{ lineHeight: "1.5" }}
           >
-            Join 10,000+ early adopters. Get exclusive access to the premium
-            library when we launch the desktop app.
+            Join over 500 early adopters and get exclusive access when we launch.
           </motion.p>
 
           <form
             onSubmit={handleSubmit}
             className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto"
           >
-            <input
+            <motion.input
               type="email"
               value={email}
               onChange={(e) => {
@@ -1055,14 +1148,27 @@ export default function Home() {
               }}
               placeholder="Enter your email"
               disabled={state === "loading"}
-              className="flex-1 px-4 py-3 sm:px-6 sm:py-4 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-white/50 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 text-sm sm:text-base"
+              whileFocus={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="flex-1 px-5 py-4 sm:px-6 sm:py-5 rounded-xl border-0 focus:outline-none focus:ring-4 focus:ring-white/30 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 text-base sm:text-lg font-medium shadow-lg placeholder:text-gray-400"
               required
+              aria-label="Email address"
             />
             <motion.button
               type="submit"
-              whileHover={{ y: 2, boxShadow: "0px 4px 0px 0px #c48600" }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 bg-[#ffae00] text-white rounded-lg shadow-[0px_6px_0px_0px_#c48600] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ease-out font-medium leading-6 text-base sm:text-lg"
+              whileHover={{
+                y: 2,
+                boxShadow: "0px 4px 0px 0px #c48600",
+                scale: 1.02,
+              }}
+              whileTap={{ scale: 0.98, y: 4 }}
+              whileFocus={{
+                outline: "2px solid white",
+                outlineOffset: "2px",
+              }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="flex items-center justify-center gap-2 px-8 py-4 sm:px-10 sm:py-5 bg-[#ffae00] text-white rounded-xl shadow-[0px_6px_0px_0px_#c48600] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-out font-semibold leading-6 text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
+              aria-label="Join waitlist"
             >
               {state === "loading" ? (
                 <>
@@ -1110,15 +1216,23 @@ export default function Home() {
           </form>
 
           {state === "error" && errorMessage && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-base max-w-2xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 p-4 bg-white/95 backdrop-blur-sm border-2 border-red-300 rounded-xl text-red-700 text-base sm:text-lg font-medium max-w-2xl mx-auto shadow-lg"
+            >
               {errorMessage}
-            </div>
+            </motion.div>
           )}
 
           {state === "success" && (
-            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-base max-w-2xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 p-4 bg-white/95 backdrop-blur-sm border-2 border-green-300 rounded-xl text-green-700 text-base sm:text-lg font-medium max-w-2xl mx-auto shadow-lg"
+            >
               You&apos;re on the list! We&apos;ll be in touch soon.
-            </div>
+            </motion.div>
           )}
         </div>
       </section>
@@ -1134,12 +1248,12 @@ export default function Home() {
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 sm:p-8"
+              className="relative bg-white rounded-3xl shadow-2xl max-w-md w-full mx-4 p-8 sm:p-10"
             >
               <button
                 onClick={() => setIsModalOpen(false)}
@@ -1161,14 +1275,14 @@ export default function Home() {
               </button>
 
               <h2
-                className="font-semibold text-[#003658] mb-3 text-2xl sm:text-3xl"
-                style={{ lineHeight: "1.2" }}
+                className="font-bold text-[#003658] mb-4 text-3xl sm:text-4xl tracking-tight"
+                style={{ lineHeight: "1.2", letterSpacing: "-0.02em" }}
               >
                 Join the waitlist
               </h2>
               <p
-                className="text-gray-600 mb-6"
-                style={{ fontSize: "16px", lineHeight: "1.5" }}
+                className="text-gray-600 mb-8 text-lg"
+                style={{ lineHeight: "1.5" }}
               >
                 Get exclusive access when we launch.
               </p>
@@ -1179,7 +1293,7 @@ export default function Home() {
                 }}
                 className="flex flex-col gap-4"
               >
-                <input
+                <motion.input
                   type="email"
                   value={email}
                   onChange={(e) => {
@@ -1191,16 +1305,29 @@ export default function Home() {
                   }}
                   placeholder="Enter your email"
                   disabled={state === "loading"}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1ba8ff] disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 text-sm sm:text-base"
+                  whileFocus={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="w-full px-5 py-4 rounded-xl border-2 border-gray-300 focus:outline-none focus:ring-4 focus:ring-[#1ba8ff]/20 focus:border-[#1ba8ff] disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 text-base font-medium shadow-sm placeholder:text-gray-400"
                   required
                   autoFocus
+                  aria-label="Email address"
                 />
                 <motion.button
                   type="submit"
-                  whileHover={{ y: 2, boxShadow: "0px 4px 0px 0px #c48600" }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 bg-[#ffae00] text-white rounded-lg shadow-[0px_6px_0px_0px_#c48600] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ease-out font-medium text-sm sm:text-base"
+                  whileHover={{
+                    y: 2,
+                    boxShadow: "0px 4px 0px 0px #c48600",
+                    scale: 1.02,
+                  }}
+                  whileTap={{ scale: 0.98, y: 4 }}
+                  whileFocus={{
+                    outline: "2px solid #1ba8ff",
+                    outlineOffset: "2px",
+                  }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="flex items-center justify-center gap-2 px-6 py-4 bg-[#ffae00] text-white rounded-xl shadow-[0px_6px_0px_0px_#c48600] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-out font-semibold text-base focus:outline-none focus:ring-2 focus:ring-[#1ba8ff] focus:ring-offset-2"
                   disabled={state === "loading"}
+                  aria-label="Join waitlist"
                 >
                   {state === "loading" ? (
                     <>
@@ -1248,15 +1375,23 @@ export default function Home() {
               </form>
 
               {state === "error" && errorMessage && (
-                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 p-4 bg-red-50 border-2 border-red-200 rounded-xl text-red-700 text-base font-medium"
+                >
                   {errorMessage}
-                </div>
+                </motion.div>
               )}
 
               {state === "success" && (
-                <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 p-4 bg-green-50 border-2 border-green-200 rounded-xl text-green-700 text-base font-medium"
+                >
                   You&apos;re on the list! We&apos;ll be in touch soon.
-                </div>
+                </motion.div>
               )}
             </motion.div>
           </motion.div>
